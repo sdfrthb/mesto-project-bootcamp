@@ -1,0 +1,10 @@
+.gallery__place-wrapper {
+  display: flex;
+  width: 246px;
+  justify-content: space-between;
+  position: absolute;
+  left: 21px;
+  top: 307px;
+}
+
+
