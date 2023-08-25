@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <meta name="description" content="">
-  <meta name="keywords" content="">  -->
   <meta name="author" content="Tatyana Zakharova">
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto RU</title>
@@ -19,73 +17,59 @@
         <img class="profile__avatar" alt="Аватар профиля" src="./images/image-min.jpg">
         <div class="profile__info">
           <h1 class="profile__username">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" type="button"></button>
+          <button class="profile__edit-button" type="button" aria-label="Редактировать профиль"></button>
           <p class="profile__description">Исследователь океана</p>
         </div>
       </div>
-      <button class="profile__add-button" type="button"></button>
+      <button class="profile__add-button" type="button" aria-label="Добавить фото"></button>
     </section>
     <section class="gallery">
       <ul class="gallery__cards">
-        <li class="gallery__card">
-          <img src="./images/karachaevsk-min.jpg" alt="Замок в Карачаевске" class="gallery__photo">
-          <div class="gallery__place-wrapper">
-            <h2 class="gallery__place">Карачаевск</h2>
-            <button class="gallery__like-button" type="button"></button>
-          </div>
-        </li>
-        <li class="gallery__card">
-          <img src="./images/elbrus-min.png" alt="Эльбрус вдали" class="gallery__photo">
-          <div class="gallery__place-wrapper">
-            <h2 class="gallery__place">Гора Эльбрус</h2>
-            <button class="gallery__like-button" type="button"></button>
-          </div>
-        </li>
-        <li class="gallery__card">
-          <img src="./images/dombay-min.png" alt="Вид на Домбай" class="gallery__photo">
-          <div class="gallery__place-wrapper">
-            <h2 class="gallery__place">Домбай</h2>
-            <button class="gallery__like-button" type="button"></button>
-          </div>
-        </li>
-        <li class="gallery__card">
-          <img src="./images/volga-min.jpeg" alt="Разлив Волги" class="gallery__photo">
-          <div class="gallery__place-wrapper">
-            <h2 class="gallery__place">Волга</h2>
-            <button class="gallery__like-button" type="button"></button>
-          </div>
-        </li>
-        <li class="gallery__card">
-          <img src="./images/baikal-min.jpeg" alt="Утес на Байкале" class="gallery__photo">
-          <div class="gallery__place-wrapper">
-            <h2 class="gallery__place">Байкал</h2>
-            <button class="gallery__like-button" type="button"></button>
-          </div>
-        </li>
-        <li class="gallery__card">
-          <img src="./images/altay-min.jpeg" alt="Озеро на Алтае" class="gallery__photo">
-          <div class="gallery__place-wrapper">
-            <h2 class="gallery__place">Алтай</h2>
-            <button class="gallery__like-button" type="button"></button>
-          </div>
-        </li>
       </ul>
-
     </section>
   </main>
   <footer class="footer">
     <p class="footer__author">© 2020 Mesto Russia</p>
   </footer>
-  <div class="popup popup_type_edit-profile popup_opened">
+  <div class="popup popup_type_edit-profile">
     <div class="popup__container">
     <button class="popup__close-button" type="button"></button>
-      <form class="popup__form">
+      <form class="popup__form" name="profile-form">
         <h2 class="popup__legend">Редактировать профиль</h2>
-        <input type="text" name="username" value="Жак-Ив Кусто" class="popup__input" placeholder="Имя" minlength="2" maxlength="35" required>
-        <input type="text" name="description" value="Исследователь океана" class="popup__input" placeholder="О себе" maxlength="150">
-        <button type="button" class="popup__save-button">Сохранить</button>
+        <input type="text" id="username" class="popup__input" placeholder="Имя" minlength="2" maxlength="35" required>
+        <input type="text" id="description" class="popup__input" placeholder="О себе" maxlength="150">
+        <button type="submit" class="popup__save-button" aria-label="Закрыть">Сохранить</button>
       </form>
     </div>
   </div>
+  <div class="popup popup_type_add-card">
+    <div class="popup__container">
+    <button class="popup__close-button" type="button"></button>
+      <form class="popup__form" name="add-card-form">
+        <h2 class="popup__legend">Новое место</h2>
+        <input type="text" id="title" class="popup__input" placeholder="Название" minlength="2" maxlength="100" required>
+        <input type="url" id="url" class="popup__input" placeholder="Ссылка на картинку" maxlength="150" required>
+        <button type="submit" class="popup__save-button" aria-label="Закрыть">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_open-card">
+    <figure class="opened-card">
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <img class="opened-card__photo" src="">
+      <figcaption class="opened-card__caption"></figcaption>
+    </figure>
+  </div>
+  <template id="card">
+    <li class="gallery__card">
+      <img src="" alt="Фотография данного места" class="gallery__photo">
+      <button class="gallery__delete-button" type="button" aria-label="Удалить"></button>
+      <div class="gallery__place-wrapper">
+        <h2 class="gallery__place"></h2>
+        <button class="gallery__like-button" type="button" aria-label="Нравится"></button>
+      </div>
+    </li>
+  </template>
+  <script src="./script.js"></script>
 </body>
 </html>

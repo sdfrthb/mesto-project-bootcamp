@@ -1,0 +1,13 @@
+.opened-card__caption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: normal;
+  max-width: 291px;
+  padding-top: 2px;
+}
+
+@media screen and (max-width:600px) {
+  .opened-card__caption {
+    padding-top: 0;
+  }
+}

@@ -8,7 +8,7 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  grid-area: profile__edit-button;
+  grid-area: edit-button;
 }
 
 .profile__edit-button:hover, .profile__edit-button:focus {

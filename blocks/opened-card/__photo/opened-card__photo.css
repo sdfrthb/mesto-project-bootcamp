@@ -1,0 +1,11 @@
+.opened-card__photo {
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+@media screen and (max-width:600px) {
+  .opened-card__photo {
+    width: 75vw;
+    padding-top: 6px;
+  }
+}

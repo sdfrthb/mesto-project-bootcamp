@@ -7,12 +7,13 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  grid-area: profile__description;
+  grid-area: description;
 }
 
 @media screen and (max-width: 500px) {
   .profile__description {
     font-size: 14px;
     text-align: center;
+    margin:0 auto;
   }
 }

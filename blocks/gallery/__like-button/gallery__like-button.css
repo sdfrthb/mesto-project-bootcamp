@@ -10,9 +10,11 @@
   align-self: center;
   margin: 5px 5px -1px 0;
   cursor: pointer;
+  transition: background-image 1s ease;
 }
 
-.gallery__like-button:hover, .gallery__like-button:focus {
+.gallery__like-button:hover {
   opacity: .5;
   outline: none;
+  transition: opacity 1s ease;
 }

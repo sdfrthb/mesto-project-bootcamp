@@ -1,0 +1,17 @@
+.opened-card {
+  display: flex;
+  flex-direction: column;
+  width: calc(75vw + 40px);
+  margin: 0;
+  gap: 8px;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+
+@media screen and (max-width:600px) {
+  .opened-card {
+    width: 75vw;
+    gap: 10px;
+    padding-left: 0;
+  }
+}

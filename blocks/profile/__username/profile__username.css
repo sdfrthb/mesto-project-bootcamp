@@ -7,13 +7,12 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  grid-area: profile__username;
+  grid-area: username;
 }
 
 @media screen and (max-width: 500px) {
   .profile__username {
     font-size: 27px;
-    font-weight: 500;
     line-height: normal;
   }
 }

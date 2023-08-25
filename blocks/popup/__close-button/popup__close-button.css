@@ -9,6 +9,7 @@
   border: 0;
   background-color: transparent;
   align-self: flex-end;
+  cursor: pointer;
 }
 
 .popup__close-button:hover, .popup__close-button:focus {

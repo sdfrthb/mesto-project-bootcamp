@@ -2,11 +2,12 @@
   max-width: 500px;
   display: grid;
   grid-template-areas:
-    'profile__username profile__edit-button'
-    'profile__description profile__description';
+    'username edit-button'
+    'description description';
   gap: 16px 18px;
   align-items: center;
   align-self: center;
+
 }
 
 @media screen and (max-width: 500px) {
