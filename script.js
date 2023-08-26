@@ -75,7 +75,7 @@ function submitAddForm(event) {
   currentObject.link = urlInput.value;
   const newCard = createCard(currentObject);
   addCard(newCard);
-  closePopup(addPopup);
+  event.target.reset()
 }
 
 function setEditInputsValues() {
@@ -91,6 +91,7 @@ function createCard(currentElement) {
   const cardDeleteButton = newCard.querySelector('.gallery__delete-button');
   const cardPhoto = newCard.querySelector('.gallery__photo')
   cardPhoto.setAttribute('src', cardUrl);
+  cardPhoto.setAttribute('alt', cardTitle);
   newCard.querySelector('.gallery__place').textContent = cardTitle;
   cardLike.addEventListener('click', () => cardLike.classList.toggle('gallery__like-button_active'));
   cardDeleteButton.addEventListener('click', () => cardDeleteButton.closest('.gallery__card').remove());
@@ -104,6 +105,7 @@ function addCard(card) {
 
 function setCardPopup(cardTitle, cardUrl) {
   popupPhoto.setAttribute('src', cardUrl);
+  popupPhoto.setAttribute('alt', cardTitle);
   popupCaption.textContent = cardTitle;
   openPopup(photoPopup);
 }
