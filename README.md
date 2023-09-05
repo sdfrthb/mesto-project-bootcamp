@@ -8,6 +8,7 @@
 * HTML
 * CSS
 * JavaScript
+* Webpack
 ### С применением
 * Семантическая разметка
 * Псевдоклассы
@@ -18,7 +19,7 @@
 * Отзывчивая верстка (Desktop-First)
 ---
 ## Планы по доработке
-Валидация
+Подключение к серверу
 ---
 ## Cсылка на проект
 [Перейти](https://sdfrthb.github.io/mesto-project-bootcamp/index.html)
