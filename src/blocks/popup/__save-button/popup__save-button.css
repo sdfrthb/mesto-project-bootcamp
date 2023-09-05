@@ -3,7 +3,7 @@
   height: 50px;
   background-color: #000;
   border-radius: 2px;
-  margin: 18px auto 37px;
+  margin: 10px auto 36.51px;
   color: #fff;
   padding: 0;
   cursor: pointer;
@@ -14,10 +14,16 @@
   border: none;
 }
 
-.profile__add-button:hover,
-.profile__add-button:focus {
+.popup__save-button:hover,
+.popup__save-button:focus {
   opacity: .8;
   outline: none;
+}
+
+.popup__save-button:disabled {
+  background: #F6F6F6;
+  color: rgba(196, 196, 196, 1);
+  border: 1px solid rgba(196, 196, 196, 1);
 }
 
 @media screen and (max-width:600px) {
@@ -28,3 +34,4 @@
     margin: 15px auto 25px;
   }
 }
+
