@@ -1,40 +1,8 @@
-// const arhiz = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg', import.meta.url);
-// const chelyabinskayaObl = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg', import.meta.url);
-// const ivanovo = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg', import.meta.url);
-// const kamchatka = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg', import.meta.url);
-// const holmgorskiiRayon = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg', import.meta.url);
-// const baikal = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg', import.meta.url);
 
-// const initialCards = [
-//   {
-//     name: 'Архыз',
-//     link: arhiz
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: chelyabinskayaObl
-//   },
-//   {
-//     name: 'Иваново',
-//     link: ivanovo
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: kamchatka
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: holmgorskiiRayon
-//   },
-//   {
-//     name: 'Байкал',
-//     link: baikal
-//   }
-// ];
 import './pages/index.css';
 import {closePopup, openPopup, overlayClose} from './components/modal.js';
 import {createCard, addCard} from './components/card.js';
-import {enableValidation, validationSelectors} from './components/validate.js';
+import {enableValidation} from './components/validate.js';
 
 
 const initialCards = [
@@ -141,7 +109,7 @@ closeButtons.forEach((button) => {
 editForm.addEventListener('submit', submitEditForm);
 addForm.addEventListener('submit', submitAddForm);
 
-enableValidation(validationSelectors);
+enableValidation();
 
 
 
