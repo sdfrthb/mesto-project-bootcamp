@@ -2,25 +2,26 @@
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__save-button',
+  inputErrorClass: 'popup__input_type_error'
 }
 
-function showError(inputElement, errorText) {
+function showError(inputElement, errorText, settings) {
   const errorElement = document.getElementById(`${inputElement.id}-error`);
   errorElement.textContent = errorText;
-  inputElement.classList.add('popup__input_type_error');
+  inputElement.classList.add(settings.inputErrorClass);
 };
 
-function hideError(inputElement) {
+function hideError(inputElement, settings) {
   const errorElement = document.getElementById(`${inputElement.id}-error`);
   errorElement.textContent = '';
-  inputElement.classList.remove('popup__input_type_error');
+  inputElement.classList.remove(settings.inputErrorClass);
 };
 
-function checkValid(inputElement) {
+function checkValid(inputElement, settings) {
   if (!inputElement.validity.valid) {
-    showError(inputElement, inputElement.validationMessage);
+    showError(inputElement, inputElement.validationMessage, settings);
   } else {
-        hideError(inputElement);
+        hideError(inputElement, settings);
   }
 }
 
@@ -40,21 +41,21 @@ function checkButton(formElement, button) {
   }
 };
 
-function setEventListeners(formElement) {
-  const inputList = formElement.querySelectorAll(validationSelectors.inputSelector);
+function setEventListeners(formElement, settings) {
+  const inputList = formElement.querySelectorAll(settings.inputSelector);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkValid(inputElement);
+      checkValid(inputElement, settings);
       checkButton(formElement, formElement.lastElementChild)
     })
   });
 };
 
-function enableValidation() {
-  const formList = document.querySelectorAll(validationSelectors.formSelector);
-  const saveButtonList = document.querySelectorAll(validationSelectors.submitButtonSelector);
-  disableButton(saveButtonList[1]);
-  formList.forEach((formElement) => setEventListeners(formElement));
+function enableValidation(settings) {
+  const formList = document.querySelectorAll(settings.formSelector);
+  // const saveButtonList = document.querySelectorAll(settings.submitButtonSelector);
+  // disableButton(saveButtonList[1]);
+  formList.forEach((formElement) => setEventListeners(formElement, settings));
 };
 
-export {enableValidation}
+export {enableValidation, validationSelectors, disableButton}

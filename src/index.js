@@ -2,7 +2,7 @@
 import './pages/index.css';
 import {closePopup, openPopup, overlayClose} from './components/modal.js';
 import {createCard, addCard} from './components/card.js';
-import {enableValidation} from './components/validate.js';
+import {enableValidation, validationSelectors, disableButton} from './components/validate.js';
 
 
 const initialCards = [
@@ -71,7 +71,8 @@ function submitAddForm(event) {
   currentObject.link = urlInput.value;
   const newCard = createCard(currentObject);
   addCard(newCard);
-  event.target.reset()
+  event.target.reset();
+  closePopup(addPopup);
 };
 
 function setEditInputsValues() {
@@ -98,7 +99,10 @@ editButton.addEventListener('click', () => {
   setEditInputsValues();
 });
 
-addButton.addEventListener('click', () => openPopup(addPopup));
+addButton.addEventListener('click', () => {
+  openPopup(addPopup);
+  disableButton(addPopup.querySelector(validationSelectors.submitButtonSelector));
+});
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
@@ -109,7 +113,7 @@ closeButtons.forEach((button) => {
 editForm.addEventListener('submit', submitEditForm);
 addForm.addEventListener('submit', submitAddForm);
 
-enableValidation();
+enableValidation(validationSelectors);
 
 
 
