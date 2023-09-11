@@ -53,8 +53,6 @@ function setEventListeners(formElement, settings) {
 
 function enableValidation(settings) {
   const formList = document.querySelectorAll(settings.formSelector);
-  // const saveButtonList = document.querySelectorAll(settings.submitButtonSelector);
-  // disableButton(saveButtonList[1]);
   formList.forEach((formElement) => setEventListeners(formElement, settings));
 };
 

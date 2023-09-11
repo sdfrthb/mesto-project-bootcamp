@@ -1,6 +1,7 @@
 .profile__user {
   display: flex;
   column-gap: 30px;
+  position: relative;
 }
 
 @media screen and (max-width: 700px) {

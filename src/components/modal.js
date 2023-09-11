@@ -8,6 +8,14 @@ function closePopup(popup) {
   document.removeEventListener('keydown', escapeClose);
 };
 
+function saveLoading(button) {
+  button.textContent = 'Сохранение...';
+}
+
+function endOfSaveLoading(button) {
+  button.textContent = 'Сохранить';
+}
+
 function escapeClose(evt) {
   if (evt.key === 'Escape') {
     const openedPopup = document.querySelector('.popup_opened');
@@ -21,4 +29,4 @@ function overlayClose(evt, popup) {
   }
 };
 
- export {closePopup, openPopup, overlayClose};
+ export {closePopup, openPopup, overlayClose, saveLoading, endOfSaveLoading};
