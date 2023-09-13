@@ -1,11 +1,11 @@
-import {setCardPopup } from "../index.js";
+import { cardPopup, deletePopup, userId } from "../index.js";
 import { addLike, removeLike } from "./api.js";
 import { openPopup } from "./modal.js";
 
 const card = document.getElementById('card').content;
 const cardList = document.querySelector('.gallery__cards');
-const deletePopup = document.querySelector('.popup_type_delete-card');
-const myId = '8e15e35f8605fbee226dfffc';
+const popupPhoto = document.querySelector('.opened-card__photo');
+const popupCaption = document.querySelector('.opened-card__caption');
 export let currentCard;
 export let currentId;
 
@@ -20,7 +20,7 @@ function createCard(currentElement) {
   try {
     cardLikes = currentElement.likes.length;
     if (currentElement.likes.some((item) => {
-      return item._id === myId})) {
+      return item._id === userId})) {
         cardLike.classList.add('gallery__like-button_active')
       }
   }
@@ -28,7 +28,7 @@ function createCard(currentElement) {
     cardLikes = '0'
   }
   newCard.querySelector('.gallery__like-number').textContent = cardLikes;
-  if (currentElement.owner._id !== myId) {
+  if (currentElement.owner._id !== userId) {
     cardDeleteButton.remove();
   }
   cardPhoto.setAttribute('src', cardUrl);
@@ -39,6 +39,7 @@ function createCard(currentElement) {
       removeLike(currentElement._id)
       .then((res) => {
         cardLike.nextElementSibling.textContent = res.likes.length;
+        cardLike.classList.toggle('gallery__like-button_active');
       })
       .catch((err) => {
         console.log(err);
@@ -48,12 +49,12 @@ function createCard(currentElement) {
       addLike(currentElement._id)
       .then((res) => {
       cardLike.nextElementSibling.textContent = res.likes.length;
+      cardLike.classList.toggle('gallery__like-button_active');
       })
       .catch((err) => {
         console.log(err);
       })
     }
-    cardLike.classList.toggle('gallery__like-button_active')
   });
   cardDeleteButton.addEventListener('click', (evt) => {
     currentCard = evt.target.closest('.gallery__card');
@@ -66,6 +67,13 @@ function createCard(currentElement) {
 
 function addCard(card) {
   cardList.prepend(card);
+};
+
+function setCardPopup(cardTitle, cardUrl) {
+  popupPhoto.setAttribute('src', cardUrl);
+  popupPhoto.setAttribute('alt', cardTitle);
+  popupCaption.textContent = cardTitle;
+  openPopup(cardPopup);
 };
 
 export {createCard, addCard};

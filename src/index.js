@@ -1,13 +1,14 @@
 import './pages/index.css';
-import {closePopup, openPopup, overlayClose, saveLoading, endOfSaveLoading} from './components/modal.js';
+import {closePopup, openPopup, handleOverlay} from './components/modal.js';
 import {createCard, addCard, currentId, currentCard} from './components/card.js';
-import {enableValidation, validationSelectors, disableButton} from './components/validate.js';
+import {enableValidation, validationSelectors} from './components/validate.js';
 import {getUserData, getInitialCards, editProfile, addNewCard, editAvatar, deleteCard} from './components/api';
+import {renderLoading, handleSubmit} from './components/utils';
 
 
 const editPopup = document.querySelector('.popup_type_edit-profile');
 const addPopup = document.querySelector('.popup_type_add-card');
-const photoPopup = document.querySelector('.popup_type_open-card');
+export const cardPopup = document.querySelector('.popup_type_open-card');
 const avatarPopup = document.querySelector('.popup_type_edit-avatar');
 export const deletePopup = document.querySelector('.popup_type_delete-card');
 
@@ -16,10 +17,10 @@ const addButton = document.querySelector('.profile__add-button');
 const avatarButton = document.querySelector('.profile__avatar')
 const closeButtons = document.querySelectorAll('.popup__close-button');
 
-const editForm = editPopup.querySelector('.popup__form');
-const addForm = addPopup.querySelector('.popup__form');
-const avatarForm = avatarPopup.querySelector('.popup__form');
-const deleteForm = deletePopup.querySelector('.popup__form');
+const editForm = document.forms['profile-form'];
+const addForm = document.forms['add-card-form'];
+const avatarForm = document.forms['edit-avatar-form'];
+const deleteForm = document.forms['delete-card-form'];
 
 const usernameInput = document.getElementById('username');
 const descriptionInput = document.getElementById('description');
@@ -31,85 +32,66 @@ const username = document.querySelector('.profile__username');
 const description = document.querySelector('.profile__description');
 const avatar = document.querySelector('.profile__avatar')
 
-const popupPhoto = document.querySelector('.opened-card__photo');
-const popupCaption = document.querySelector('.opened-card__caption');
+export let userId
 
 
-
-function submitEditForm(event, button) {
-  event.preventDefault();
-  editProfile({
-    username: usernameInput.value,
-    description: descriptionInput.value
-  })
+function submitEditForm(evt) {
+  function makeRequest() {
+    return editProfile({
+      username: usernameInput.value,
+      description: descriptionInput.value
+    })
   .then((res) => {
     username.textContent = res.name;
     description.textContent = res.about;
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    endOfSaveLoading(button);
-    closePopup(editPopup)
-  });
+    })
+  }
+  handleSubmit(makeRequest, evt)
 };
 
-function submitAvatarForm(event, button) {
-  event.preventDefault();
-  editAvatar({
+function submitAvatarForm(evt) {
+  function makeRequest() {
+   return editAvatar({
     photo: photoInput.value
-  })
+    })
   .then((res) => {
     avatar.style.backgroundImage = `url(${res.avatar})`;
-  })
-  .catch((err) => {
-    console.log(err);
-  })
-  .finally(() => {
-    endOfSaveLoading(button);
-    event.target.reset();
-    closePopup(avatarPopup);
-  });
+    })
+  }
+handleSubmit(makeRequest, evt)
 };
 
-function submitAddForm(event, button) {
-  event.preventDefault();
-  addNewCard({
+function submitAddForm(evt) {
+  function makeRequest() {
+    return addNewCard({
     name: titleInput.value,
     link: urlInput.value
-  })
+    })
   .then((res) => {
-    console.log(res.owner._id)
     const currentObject = {owner: {}};
     currentObject.name = res.name;
     currentObject.link = res.link;
     currentObject._id = res._id;
     currentObject.owner._id = res.owner._id;
-    console.log(currentObject)
     const newCard = createCard(currentObject);
     addCard(newCard);
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-  .finally(() => {
-    endOfSaveLoading(button);
-    event.target.reset();
-    closePopup(addPopup);
-  });
+    })
+  }
+  handleSubmit(makeRequest, evt)
 };
+
+// без изменения кнопки
 
 function submitDeleteForm(event) {
   event.preventDefault();
   deleteCard(currentId)
   .then(() => {
       currentCard.remove();
+      closePopup(deletePopup)
     })
   .catch((err) => {
-      console.log(err);
-    })
-  .finally(() => closePopup(deletePopup))
+    console.error(`Ошибка: ${err}`);
+  })
 };
 
 function setEditInputsValues() {
@@ -117,12 +99,6 @@ function setEditInputsValues() {
   descriptionInput.value = description.textContent;
 };
 
- export function setCardPopup(cardTitle, cardUrl) {
-  popupPhoto.setAttribute('src', cardUrl);
-  popupPhoto.setAttribute('alt', cardTitle);
-  popupCaption.textContent = cardTitle;
-  openPopup(photoPopup);
-};
 
 editButton.addEventListener('click', () => {
   openPopup(editPopup);
@@ -131,58 +107,47 @@ editButton.addEventListener('click', () => {
 
 addButton.addEventListener('click', () => {
   openPopup(addPopup);
-  disableButton(addPopup.querySelector(validationSelectors.submitButtonSelector));
 });
 
 avatarButton.addEventListener('click', () => {
   openPopup(avatarPopup);
-  disableButton(avatarPopup.querySelector(validationSelectors.submitButtonSelector));
 });
 
 closeButtons.forEach((button) => {
   const popup = button.closest('.popup');
-  popup.addEventListener('mousedown', (evt) => overlayClose(evt,popup));
+  popup.addEventListener('mousedown', (evt) => handleOverlay(evt,popup));
   button.addEventListener('click', () => closePopup(popup));
 });
 
 editForm.addEventListener('submit', (evt) => {
-  saveLoading(editForm.lastElementChild);
+  renderLoading(true, editForm.lastElementChild);
   submitEditForm(evt, editForm.lastElementChild);
 });
 
 addForm.addEventListener('submit', (evt) => {
-  saveLoading(addForm.lastElementChild);
+  renderLoading(true, addForm.lastElementChild);
   submitAddForm(evt, addForm.lastElementChild);
 });
 
 avatarForm.addEventListener('submit', (evt) => {
-  saveLoading(avatarForm.lastElementChild);
+  renderLoading(true, avatarForm.lastElementChild);
   submitAvatarForm(evt, avatarForm.lastElementChild);
 });
 
 deleteForm.addEventListener('submit', (evt) => submitDeleteForm(evt));
 
-getUserData()
-.then((res) => {
-  username.textContent = res.name;
-  description.textContent = res.about;
-  avatar.style.backgroundImage = `url(${res.avatar})`;
-})
-.catch((err) => {
-  console.log(err);
-})
-
-getInitialCards()
-.then((res) => {
-  res.forEach(initialElement => {
-    const newCard = createCard(initialElement);
-    addCard(newCard);
+Promise.all([getUserData(), getInitialCards()])
+  .then(([userData, cards]) => {
+    username.textContent = userData.name;
+    description.textContent = userData.about;
+    avatar.style.backgroundImage = `url(${userData.avatar})`;
+    userId = userData._id;
+    cards.forEach(initialElement => {
+      const newCard = createCard(initialElement);
+      addCard(newCard);
+    })
   })
-})
-.catch((err) => {
-  console.log(err);
-})
-
+  .catch(console.error);
 
 enableValidation(validationSelectors);
 

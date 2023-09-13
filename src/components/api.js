@@ -13,22 +13,24 @@ function checkResponse(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
+function request(endPoint, options) {
+  return fetch(`${config.baseUrl}${endPoint}`, options).then(checkResponse)
+}
+
 const getUserData = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
+  return request(`/users/me`, {
     headers: config.headers
   })
-    .then(checkResponse);
 }
 
 const getInitialCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
+  return request(`/cards`, {
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 const editProfile = (profileData) => {
-  return fetch(`${config.baseUrl}/users/me`, {
+  return request(`/users/me`, {
     method: 'PATCH',
     body: JSON.stringify({
       name: profileData.username,
@@ -36,22 +38,20 @@ const editProfile = (profileData) => {
     }),
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 const editAvatar = (link) => {
-return fetch(`${config.baseUrl}/users/me/avatar`, {
+return request(`/users/me/avatar`, {
   method: 'PATCH',
     body: JSON.stringify({
       avatar: link.photo,
     }),
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 const addNewCard = (cardData) => {
-  return fetch(`${config.baseUrl}/cards`, {
+  return request(`/cards`, {
     method: 'POST',
     body: JSON.stringify({
       name: cardData.name,
@@ -59,31 +59,27 @@ const addNewCard = (cardData) => {
     }),
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 const deleteCard = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/${cardId}`, {
+  return request(`/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 const addLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+  return request(`/cards/likes/${cardId}`, {
     method: 'PUT',
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 const removeLike = (cardId) => {
-  return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
+  return request(`/cards/likes/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(checkResponse);
 }
 
 export {getUserData, getInitialCards, editProfile, addNewCard,

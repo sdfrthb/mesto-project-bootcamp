@@ -43,10 +43,15 @@ function checkButton(formElement, button) {
 
 function setEventListeners(formElement, settings) {
   const inputList = formElement.querySelectorAll(settings.inputSelector);
+  const saveButton = formElement.querySelector(settings.submitButtonSelector);
+  if (formElement.name !== 'profile-form' && formElement.name !== 'delete-card-form') {
+    disableButton(saveButton);
+  }
+  formElement.addEventListener('reset', () => disableButton(saveButton))
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkValid(inputElement, settings);
-      checkButton(formElement, formElement.lastElementChild)
+      checkButton(formElement, saveButton)
     })
   });
 };
