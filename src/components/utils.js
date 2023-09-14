@@ -9,14 +9,14 @@ function renderLoading(isLoading, button, buttonText='Сохранить', loadi
   }
 };
 
-function handleSubmit(request, evt, loadingText = "Сохранение...") {
+function handleSubmit(request, evt, isInputElement, loadingText = "Сохранение..." ) {
   evt.preventDefault();
   const submitButton = evt.submitter;
   const initialText = submitButton.textContent;
   renderLoading(true, submitButton, initialText, loadingText);
   request()
     .then(() => {
-      evt.target.reset();
+      isInputElement && evt.target.reset();
       closePopup(evt.target.closest('.popup'))
     })
     .catch((err) => {

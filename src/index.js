@@ -46,7 +46,7 @@ function submitEditForm(evt) {
     description.textContent = res.about;
     })
   }
-  handleSubmit(makeRequest, evt)
+  handleSubmit(makeRequest, evt, true)
 };
 
 function submitAvatarForm(evt) {
@@ -58,7 +58,7 @@ function submitAvatarForm(evt) {
     avatar.style.backgroundImage = `url(${res.avatar})`;
     })
   }
-handleSubmit(makeRequest, evt)
+handleSubmit(makeRequest, evt, true)
 };
 
 function submitAddForm(evt) {
@@ -77,21 +77,18 @@ function submitAddForm(evt) {
     addCard(newCard);
     })
   }
-  handleSubmit(makeRequest, evt)
+  handleSubmit(makeRequest, evt, true)
 };
 
-// без изменения кнопки
-
-function submitDeleteForm(event) {
-  event.preventDefault();
-  deleteCard(currentId)
-  .then(() => {
+function submitDeleteForm(evt) {
+  function makeRequest() {
+    return deleteCard(currentId)
+    .then(() => {
       currentCard.remove();
       closePopup(deletePopup)
-    })
-  .catch((err) => {
-    console.error(`Ошибка: ${err}`);
-  })
+      })
+  }
+  handleSubmit(makeRequest, evt, true, 'Удаление...')
 };
 
 function setEditInputsValues() {
@@ -119,22 +116,13 @@ closeButtons.forEach((button) => {
   button.addEventListener('click', () => closePopup(popup));
 });
 
-editForm.addEventListener('submit', (evt) => {
-  renderLoading(true, editForm.lastElementChild);
-  submitEditForm(evt, editForm.lastElementChild);
-});
+editForm.addEventListener('submit', submitEditForm);
 
-addForm.addEventListener('submit', (evt) => {
-  renderLoading(true, addForm.lastElementChild);
-  submitAddForm(evt, addForm.lastElementChild);
-});
+addForm.addEventListener('submit', submitAddForm);
 
-avatarForm.addEventListener('submit', (evt) => {
-  renderLoading(true, avatarForm.lastElementChild);
-  submitAvatarForm(evt, avatarForm.lastElementChild);
-});
+avatarForm.addEventListener('submit', submitAvatarForm);
 
-deleteForm.addEventListener('submit', (evt) => submitDeleteForm(evt));
+deleteForm.addEventListener('submit', submitDeleteForm);
 
 Promise.all([getUserData(), getInitialCards()])
   .then(([userData, cards]) => {

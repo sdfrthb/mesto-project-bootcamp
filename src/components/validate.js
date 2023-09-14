@@ -44,9 +44,7 @@ function checkButton(formElement, button) {
 function setEventListeners(formElement, settings) {
   const inputList = formElement.querySelectorAll(settings.inputSelector);
   const saveButton = formElement.querySelector(settings.submitButtonSelector);
-  if (formElement.name !== 'profile-form' && formElement.name !== 'delete-card-form') {
-    disableButton(saveButton);
-  }
+  disableButton(saveButton);
   formElement.addEventListener('reset', () => disableButton(saveButton))
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
@@ -58,7 +56,11 @@ function setEventListeners(formElement, settings) {
 
 function enableValidation(settings) {
   const formList = document.querySelectorAll(settings.formSelector);
-  formList.forEach((formElement) => setEventListeners(formElement, settings));
+  formList.forEach((formElement) => {
+    if (formElement.querySelector(settings.inputSelector)) {
+      setEventListeners(formElement, settings)
+    }
+  });
 };
 
 export {enableValidation, validationSelectors, disableButton}
